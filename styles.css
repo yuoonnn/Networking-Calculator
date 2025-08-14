@@ -1,0 +1,549 @@
+/* Reset and Base Styles */
+:root {
+    --bg-start: #0b1020;
+    --bg-end: #1a2240;
+    --grid: rgba(255, 255, 255, 0.05);
+    --primary: #60a5fa; /* blue */
+    --secondary: #22d3ee; /* cyan */
+    --accent: #7c3aed; /* purple */
+    --text-strong: #e6edf7;
+    --text-soft: #c7d2fe;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at -10% -10%, #0ea5e9 0%, transparent 60%),
+                radial-gradient(1000px 600px at 110% 0%, #7c3aed 0%, transparent 60%),
+                linear-gradient(160deg, var(--bg-start) 0%, var(--bg-end) 100%);
+    min-height: 100vh;
+    color: #333;
+    line-height: 1.6;
+    position: relative;
+}
+
+/* Subtle grid overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header Styles */
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-strong);
+}
+
+.header h1 {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.4px;
+    text-shadow: 0 5px 24px rgba(34, 211, 238, 0.25);
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.85;
+    font-weight: 400;
+}
+
+/* Navigation Tabs */
+.nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: var(--text-strong);
+    padding: 12px 24px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.tab-btn:hover {
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.tab-btn.active {
+    background: radial-gradient(120% 120% at 50% 0%, rgba(34,211,238,0.25), rgba(124,58,237,0.2));
+    border-color: rgba(34, 211, 238, 0.6);
+    box-shadow: 0 10px 30px rgba(34,211,238,0.25), 0 2px 8px rgba(0,0,0,0.2) inset;
+}
+
+.tab-btn i {
+    margin-right: 8px;
+}
+
+/* Main Content */
+.main-content {
+    background: rgba(255,255,255,0.9);
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(10,10,25,0.3);
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.tab-content {
+    display: none;
+    padding: 40px;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Calculator Cards */
+.calculator-card {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.calculator-card h2 {
+    color: #2d3748;
+    margin-bottom: 10px;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.calculator-card h2 i {
+    color: var(--secondary);
+    margin-right: 10px;
+}
+
+.calculator-card p {
+    color: #718096;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* Input Groups */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f7fafc;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Calculate Button */
+.calculate-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(34, 211, 238, 0.35);
+}
+
+.calculate-btn i {
+    margin-right: 8px;
+}
+
+/* Results */
+.results {
+    background: #f8fafc;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.range-table-container {
+    margin-top: 20px;
+}
+
+.range-table-container h3 {
+    color: #2d3748;
+    margin-bottom: 10px;
+}
+
+.range-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.range-table th,
+.range-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+}
+
+.range-table thead th {
+    background: linear-gradient(180deg, #f1f5f9, #e8eef6);
+    color: #334155;
+    font-weight: 600;
+}
+
+.range-table tbody tr:hover {
+    background: #f8fafc;
+}
+
+.range-table tbody tr:nth-child(odd) {
+    background: #fbfdff;
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.result-item:last-child {
+    border-bottom: none;
+}
+
+.result-item .label {
+    font-weight: 500;
+    color: #4a5568;
+}
+
+.result-item .value {
+    font-weight: 600;
+    color: #2d3748;
+    font-family: 'Courier New', monospace;
+    background: #edf2f7;
+    padding: 4px 12px;
+    border-radius: 6px;
+}
+
+/* VLSM Specific Styles */
+.vlsm-inputs {
+    margin-bottom: 30px;
+}
+
+.subnet-requirements h3 {
+    color: #2d3748;
+    margin: 20px 0 15px 0;
+    font-size: 1.3rem;
+}
+
+.subnet-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.subnet-name {
+    flex: 2;
+}
+
+.subnet-hosts {
+    flex: 1;
+}
+
+.remove-subnet {
+    background: #e53e3e;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.remove-subnet:hover {
+    background: #c53030;
+}
+
+.add-subnet-btn {
+    background: #38a169;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.add-subnet-btn:hover {
+    background: #2f855a;
+}
+
+.add-subnet-btn i {
+    margin-right: 8px;
+}
+
+/* VLSM Results */
+.vlsm-results {
+    background: #f8fafc;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+    border: 1px solid #e2e8f0;
+}
+
+.subnet-result {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.subnet-result h4 {
+    color: #2d3748;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.subnet-result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+/* Tools Grid */
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.tool-card {
+    background: #f8fafc;
+    border-radius: 15px;
+    padding: 25px;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+.tool-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.12);
+}
+
+.tool-card h3 {
+    color: #2d3748;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.tool-card h3 i {
+    color: #667eea;
+    margin-right: 8px;
+}
+
+.tool-btn {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.tool-btn:hover {
+    filter: brightness(1.03);
+}
+
+.tool-result {
+    margin-top: 15px;
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #2d3748;
+    min-height: 60px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 40px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header h1 {
+        font-size: 2rem;
+    }
+    
+    .nav-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .tab-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .tab-content {
+        padding: 25px 20px;
+    }
+    
+    .subnet-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .subnet-name,
+    .subnet-hosts {
+        flex: none;
+    }
+    
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .calculator-card h2 {
+        font-size: 1.5rem;
+    }
+    
+    .tab-content {
+        padding: 20px 15px;
+    }
+}
+
+/* Animation for tab switching */
+.tab-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Success and Error States */
+.success {
+    color: #38a169;
+    background: #f0fff4;
+    border-color: #9ae6b4;
+}
+
+.error {
+    color: #e53e3e;
+    background: #fff5f5;
+    border-color: #feb2b2;
+}
+
+/* Loading State */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid #667eea;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

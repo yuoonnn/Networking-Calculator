@@ -1,0 +1,44 @@
+{
+  "name": "networking-calculator",
+  "version": "1.0.0",
+  "description": "A comprehensive networking calculator website with subnetting, VLSM, and network planning tools",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000",
+    "dev": "npx live-server --port=8000"
+  },
+  "keywords": [
+    "networking",
+    "subnetting",
+    "vlsm",
+    "calculator",
+    "ip-address",
+    "cidr",
+    "network-planning",
+    "it-tools"
+  ],
+  "author": "Networking Calculator Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/networking-calculator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/networking-calculator/issues"
+  },
+  "homepage": "https://github.com/yourusername/networking-calculator#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
+

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking Calculator - Subnetting & VLSM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-network-wired"></i> Networking Calculator</h1>
+            <p>Professional tools for subnetting, VLSM, and network calculations</p>
+        </header>
+
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="subnetting">
+                <i class="fas fa-calculator"></i> Subnetting
+            </button>
+            <button class="tab-btn" data-tab="vlsm">
+                <i class="fas fa-sitemap"></i> VLSM
+            </button>
+            <button class="tab-btn" data-tab="tools">
+                <i class="fas fa-tools"></i> Tools
+            </button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Subnetting Calculator Tab -->
+            <div class="tab-content active" id="subnetting">
+                <div class="calculator-card">
+                    <h2><i class="fas fa-calculator"></i> Subnetting Calculator</h2>
+                    <p>Enter a network in CIDR notation (e.g., 192.168.1.0/26) to view class, bits, mask, magic number, totals, and ranges</p>
+                    
+                    <div class="input-group">
+                        <label for="network-cidr">Network Address (CIDR):</label>
+                        <input type="text" id="network-cidr" placeholder="192.168.1.0/26" value="192.168.1.0/26">
+                    </div>
+                    
+                    <button class="calculate-btn" onclick="calculateSubnetting()">
+                        <i class="fas fa-calculate"></i> Calculate Subnetting
+                    </button>
+                    
+                    <div class="results" id="subnetting-results">
+                        <div class="result-item">
+                            <span class="label">Class Address:</span>
+                            <span class="value" id="class-address">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Borrowed Bits:</span>
+                            <span class="value" id="borrowed-bits">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Subnet Mask:</span>
+                            <span class="value" id="subnet-mask-result">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Magic Number:</span>
+                            <span class="value" id="magic-number">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Total Number of Subnets:</span>
+                            <span class="value" id="total-subnets">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Total Number of Hosts:</span>
+                            <span class="value" id="total-hosts">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="range-table-container">
+                        <h3>Ranges</h3>
+                        <table class="range-table" id="range-table">
+                            <thead>
+                                <tr>
+                                    <th>Network Address</th>
+                                    <th>Usable Range</th>
+                                    <th>Broadcast Address</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Rows inserted dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <hr style="margin:30px 0;border:none;border-top:1px solid #e2e8f0;">
+                    
+                    <h2><i class="fas fa-user-cog"></i> Subnetting by Host Requirements</h2>
+                    <p>Provide a base network and required hosts to compute the optimal subnet size and ranges inside that base.</p>
+                    
+                    <div class="input-group">
+                        <label for="host-base-cidr">Base Network (CIDR):</label>
+                        <input type="text" id="host-base-cidr" placeholder="192.168.10.0/24" value="192.168.10.0/24">
+                    </div>
+                    <div class="input-group">
+                        <label for="hosts-required">Hosts Required (per subnet):</label>
+                        <input type="number" id="hosts-required" placeholder="50" value="50" min="1">
+                    </div>
+                    
+                    <button class="calculate-btn" onclick="calculateSubnettingByHosts()">
+                        <i class="fas fa-calculate"></i> Calculate by Hosts
+                    </button>
+                    
+                    <div class="results" id="hosts-results">
+                        <div class="result-item">
+                            <span class="label">Bits:</span>
+                            <span class="value" id="host-bits-req">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">New Subnet Mask:</span>
+                            <span class="value" id="new-mask-req">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">New CIDR:</span>
+                            <span class="value" id="new-cidr-req">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Magic Number:</span>
+                            <span class="value" id="magic-number-req">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Total Number of Subnets (inside base):</span>
+                            <span class="value" id="total-subnets-req">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Usable Hosts per Subnet:</span>
+                            <span class="value" id="usable-hosts-req">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="range-table-container">
+                        <h3>Ranges (inside base)</h3>
+                        <table class="range-table" id="host-range-table">
+                            <thead>
+                                <tr>
+                                    <th>Network Address</th>
+                                    <th>Usable Range</th>
+                                    <th>Broadcast Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                    <hr style="margin:30px 0;border:none;border-top:1px solid #e2e8f0;">
+                    
+                    <h2><i class="fas fa-sitemap"></i> Subnetting by Network Requirements</h2>
+                    <p>Provide a base network and the number of subnets you need. We'll compute the minimum borrowed bits and show the resulting subnet mask, CIDR, increment, capacity, and ranges inside the base.</p>
+                    
+                    <div class="input-group">
+                        <label for="net-base-cidr">Base Network (CIDR):</label>
+                        <input type="text" id="net-base-cidr" placeholder="10.0.0.0/8" value="10.0.0.0/8">
+                    </div>
+                    <div class="input-group">
+                        <label for="networks-required">Networks Required (count):</label>
+                        <input type="number" id="networks-required" placeholder="6000" value="6000" min="1">
+                    </div>
+                    
+                    <button class="calculate-btn" onclick="calculateSubnettingByNetworks()">
+                        <i class="fas fa-calculate"></i> Calculate by Networks
+                    </button>
+                    
+                    <div class="results" id="networks-results">
+                        <div class="result-item">
+                            <span class="label">Borrowed Bits:</span>
+                            <span class="value" id="net-bits">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">New Subnet Mask:</span>
+                            <span class="value" id="net-new-mask">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">New CIDR:</span>
+                            <span class="value" id="net-new-cidr">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Magic Number (inc):</span>
+                            <span class="value" id="net-magic">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Networks Required:</span>
+                            <span class="value" id="net-required">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Actual Networks (inside base):</span>
+                            <span class="value" id="net-actual">-</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="label">Usable Hosts per Subnet:</span>
+                            <span class="value" id="net-usable-hosts">-</span>
+                        </div>
+                    </div>
+                    
+                    <div class="range-table-container">
+                        <h3>Ranges (inside base)</h3>
+                        <table class="range-table" id="network-range-table">
+                            <thead>
+                                <tr>
+                                    <th>Network Address</th>
+                                    <th>Usable Range</th>
+                                    <th>Broadcast Address</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VLSM Calculator Tab -->
+            <div class="tab-content" id="vlsm">
+                <div class="calculator-card">
+                    <h2><i class="fas fa-sitemap"></i> VLSM Calculator</h2>
+                    <p>Calculate Variable Length Subnet Masks for multiple networks</p>
+                    
+                    <div class="vlsm-inputs">
+                        <div class="input-group">
+                            <label for="vlsm-network">Network Address:</label>
+                            <input type="text" id="vlsm-network" placeholder="192.168.1.0" value="192.168.1.0">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="vlsm-mask">Original Subnet Mask:</label>
+                            <input type="text" id="vlsm-mask" placeholder="255.255.255.0" value="255.255.255.0">
+                        </div>
+                        
+                        <div class="subnet-requirements">
+                            <h3>Subnet Requirements</h3>
+                            <div id="subnet-list">
+                                <div class="subnet-input">
+                                    <input type="text" placeholder="Subnet Name" class="subnet-name" value="LAN1">
+                                    <input type="number" placeholder="Hosts" class="subnet-hosts" value="50" min="1">
+                                    <button class="remove-subnet" onclick="removeSubnet(this)"><i class="fas fa-trash"></i></button>
+                                </div>
+                                <div class="subnet-input">
+                                    <input type="text" placeholder="Subnet Name" class="subnet-name" value="LAN2">
+                                    <input type="number" placeholder="Hosts" class="subnet-hosts" value="25" min="1">
+                                    <button class="remove-subnet" onclick="removeSubnet(this)"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <button class="add-subnet-btn" onclick="addSubnet()">
+                                <i class="fas fa-plus"></i> Add Subnet
+                            </button>
+                        </div>
+                        
+                        <button class="calculate-btn" onclick="calculateVLSM()">
+                            <i class="fas fa-calculate"></i> Calculate VLSM
+                        </button>
+                    </div>
+                    
+                    <div class="vlsm-results" id="vlsm-results">
+                        <!-- VLSM results will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Tools Tab -->
+            <div class="tab-content" id="tools">
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <h3><i class="fas fa-ip-address"></i> IP Address Converter</h3>
+                        <div class="input-group">
+                            <label for="ip-input">IP Address:</label>
+                            <input type="text" id="ip-input" placeholder="192.168.1.1">
+                        </div>
+                        <button class="tool-btn" onclick="convertIP()">Convert</button>
+                        <div class="tool-result" id="ip-conversion-result"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3><i class="fas fa-binary"></i> Binary Calculator</h3>
+                        <div class="input-group">
+                            <label for="binary-input">Binary Number:</label>
+                            <input type="text" id="binary-input" placeholder="11000000">
+                        </div>
+                        <button class="tool-btn" onclick="convertBinary()">Convert</button>
+                        <div class="tool-result" id="binary-conversion-result"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3><i class="fas fa-mask"></i> CIDR Calculator</h3>
+                        <div class="input-group">
+                            <label for="cidr-input">CIDR Notation:</label>
+                            <input type="text" id="cidr-input" placeholder="/24">
+                        </div>
+                        <button class="tool-btn" onclick="calculateCIDR()">Calculate</button>
+                        <div class="tool-result" id="cidr-result"></div>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <h3><i class="fas fa-network-wired"></i> Network Range</h3>
+                        <div class="input-group">
+                            <label for="range-network">Network:</label>
+                            <input type="text" id="range-network" placeholder="192.168.1.0/24">
+                        </div>
+                        <button class="tool-btn" onclick="calculateRange()">Calculate</button>
+                        <div class="tool-result" id="range-result"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Designed & Built By Christian Uanan</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
