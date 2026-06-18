@@ -41,6 +41,16 @@ A professional, modern networking calculator website focused on subnetting, VLSM
 2. Open `index.html` in your web browser
 3. Start using the networking calculators!
 
+### Docker
+Run the site using Docker (image published to Docker Hub):
+
+```powershell
+docker pull yuoonnn/networking-calculator:latest
+docker run --rm -p 8080:80 yuoonnn/networking-calculator:latest
+```
+
+Then open http://localhost:8080 in your browser.
+
 ### Usage Examples
 
 #### Subnetting (CIDR)
